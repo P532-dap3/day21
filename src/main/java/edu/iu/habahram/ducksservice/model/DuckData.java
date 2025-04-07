@@ -1,6 +1,6 @@
 package edu.iu.habahram.ducksservice.model;
 
-public record DuckData(int id, String name, String type) {
+public record DuckData(int id, String name, String type) implements Comparable<DuckData> {
 
     public String toLine() {
         return String.format("%1$s,%2$s,%3$s", id(), name(), type());
@@ -13,6 +13,11 @@ public record DuckData(int id, String name, String type) {
     public static DuckData fromLine(String line) {
         String[] tokens = line.split(",");
         return new DuckData(Integer.parseInt(tokens[0]), tokens[1], tokens[2]);
+    }
+
+    @Override
+    public int compareTo(DuckData other) {
+        return this.type().compareToIgnoreCase(other.type());
     }
 
 }
